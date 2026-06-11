@@ -1,0 +1,54 @@
+/* Weather Animations */
+
+@keyframes rain {
+    0%, 100% { opacity: 0.7; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(5px); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.current-card { animation: fadeIn 0.5s ease-out; }
+.forecast-card { animation: fadeIn 0.5s ease-out forwards; }
+.forecast-card:nth-child(1) { animation-delay: 0.1s; }
+.forecast-card:nth-child(2) { animation-delay: 0.2s; }
+.forecast-card:nth-child(3) { animation-delay: 0.3s; }
+.forecast-card:nth-child(4) { animation-delay: 0.4s; }
+.forecast-card:nth-child(5) { animation-delay: 0.5s; }
+.weather-icon-large img { animation: float 3s ease-in-out infinite; }
+.detail-card { animation: slideIn 0.5s ease-out; }
+.error { animation: shake 0.5s ease-out; }
+.loading { animation: fadeIn 0.3s ease-out; }
+
+.btn { position: relative; }
+.btn::after { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%; background: rgba(255, 255, 255, 0.2); border-radius: 8px; transition: width 0.3s ease; pointer-events: none; }
+.btn:hover::after { width: 100%; }
+
+.weather-rainy { animation: rain 1.5s ease-in-out infinite; }
+.weather-cloudy { animation: float 4s ease-in-out infinite; }
+.weather-sunny { animation: pulse 2s ease-in-out infinite; }
+
+body { transition: background-color 0.3s ease, color 0.3s ease; }

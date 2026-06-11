@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌤️ Weather Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🌤️ Weather Dashboard</h1>
+                <div class="header-controls">
+                    <button id="themeToggle" class="btn btn-icon" title="Toggle theme">🌙</button>
+                    <button id="geoButton" class="btn btn-icon" title="Use my location">📍</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input 
+                    type="text" 
+                    id="cityInput" 
+                    class="search-input" 
+                    placeholder="Search city..."
+                    autocomplete="off"
+                >
+                <button id="searchBtn" class="btn btn-primary">Search</button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Loading weather data...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="error hidden"></div>
+
+            <!-- Current Weather -->
+            <section id="currentWeather" class="weather-section hidden">
+                <div class="current-card">
+                    <div class="weather-header">
+                        <div>
+                            <h2 id="cityName" class="city-name"></h2>
+                            <p id="weatherDesc" class="weather-description"></p>
+                        </div>
+                        <div class="weather-icon-large">
+                            <img id="weatherIcon" src="" alt="Weather icon">
+                        </div>
+                    </div>
+
+                    <div class="temperature-display">
+                        <div class="temp-main">
+                            <span id="temperature" class="temp-value"></span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                        <div class="temp-feel">
+                            Feels like <span id="feelsLike"></span>°
+                        </div>
+                    </div>
+
+                    <!-- Weather Details Grid -->
+                    <div class="details-grid">
+                        <div class="detail-card">
+                            <div class="detail-icon">💧</div>
+                            <div class="detail-info">
+                                <p class="detail-label">Humidity</p>
+                                <p id="humidity" class="detail-value"></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">💨</div>
+                            <div class="detail-info">
+                                <p class="detail-label">Wind Speed</p>
+                                <p id="windSpeed" class="detail-value"></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">🌪️</div>
+                            <div class="detail-info">
+                                <p class="detail-label">Pressure</p>
+                                <p id="pressure" class="detail-value"></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">👁️</div>
+                            <div class="detail-info">
+                                <p class="detail-label">Visibility</p>
+                                <p id="visibility" class="detail-value"></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">☁️</div>
+                            <div class="detail-info">
+                                <p class="detail-label">Cloudiness</p>
+                                <p id="clouds" class="detail-value"></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">⏰</div>
+                            <div class="detail-info">
+                                <p class="detail-label">Last Updated</p>
+                                <p id="lastUpdate" class="detail-value"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="actions">
+                        <button id="favoriteBtn" class="btn btn-secondary">⭐ Add to Favorites</button>
+                        <button id="forecastBtn" class="btn btn-secondary">📅 View Forecast</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5-Day Forecast -->
+            <section id="forecastSection" class="forecast-section hidden">
+                <h2 class="section-title">5-Day Forecast</h2>
+                <div id="forecastContainer" class="forecast-grid">
+                    <!-- Forecast cards will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Favorites -->
+            <section id="favoritesSection" class="favorites-section hidden">
+                <h2 class="section-title">⭐ Favorite Locations</h2>
+                <div id="favoritesList" class="favorites-grid">
+                    <!-- Favorite items will be inserted here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>🌍 Weather data provided by <a href="https://openweathermap.org" target="_blank">OpenWeatherMap</a></p>
+            <p>Made with ❤️ | <a href="https://github.com/iimzerox/weather-dashboard" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/weather.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

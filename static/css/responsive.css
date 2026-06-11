@@ -1,0 +1,70 @@
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    .container { padding: 0 15px; }
+    .header-content { flex-direction: column; gap: 20px; text-align: center; }
+    .logo { font-size: 24px; }
+    .search-bar { flex-direction: column; }
+    .search-input { width: 100%; }
+    .current-card { padding: 30px 20px; }
+    .weather-header { flex-direction: column; text-align: center; gap: 20px; }
+    .city-name { font-size: 28px; }
+    .weather-description { font-size: 16px; }
+    .weather-icon-large img { width: 100px; height: 100px; }
+    .temperature-display { flex-direction: column; gap: 10px; }
+    .temp-value { font-size: 56px; }
+    .details-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .detail-card { padding: 15px; }
+    .detail-icon { font-size: 24px; }
+    .detail-value { font-size: 18px; }
+    .actions { flex-direction: column; }
+    .section-title { font-size: 20px; }
+    .forecast-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+    .forecast-card { padding: 15px; }
+    .forecast-icon { font-size: 40px; }
+    .favorites-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+
+@media (max-width: 480px) {
+    .container { padding: 0 10px; }
+    .header { padding: 20px 0; margin-bottom: 20px; }
+    .logo { font-size: 20px; }
+    .header-controls { gap: 8px; }
+    .btn-icon { width: 40px; height: 40px; font-size: 18px; }
+    .search-bar { gap: 8px; }
+    .btn { padding: 10px 16px; font-size: 14px; }
+    .current-card { padding: 20px 15px; }
+    .city-name { font-size: 24px; }
+    .weather-icon-large img { width: 80px; height: 80px; }
+    .temp-value { font-size: 48px; }
+    .temp-unit { font-size: 24px; }
+    .details-grid { grid-template-columns: 1fr; gap: 12px; }
+    .detail-card { padding: 12px; gap: 12px; }
+    .detail-label { font-size: 11px; }
+    .detail-value { font-size: 16px; }
+    .section-title { font-size: 18px; margin-bottom: 15px; }
+    .forecast-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .forecast-card { padding: 12px; }
+    .forecast-icon { font-size: 32px; margin: 8px 0; }
+    .forecast-desc { font-size: 12px; margin-bottom: 10px; }
+    .temp-max { font-size: 16px; }
+    .temp-min { font-size: 12px; }
+    .forecast-details { font-size: 10px; padding-top: 10px; }
+    .favorites-grid { grid-template-columns: 1fr; gap: 15px; }
+    .favorite-item { padding: 15px; }
+    .favorite-remove { width: 28px; height: 28px; font-size: 16px; }
+    .footer { padding: 20px 15px; font-size: 12px; }
+    .main { margin-bottom: 20px; }
+}
+
+@media (min-width: 1400px) {
+    .container { max-width: 1400px; }
+    .details-grid { grid-template-columns: repeat(3, 1fr); }
+    .forecast-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (max-height: 600px) {
+    .header { padding: 15px 0; margin-bottom: 20px; }
+    .current-card { padding: 20px; }
+    .search-bar { margin-bottom: 20px; }
+}
