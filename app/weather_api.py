@@ -9,7 +9,12 @@ from app.models import Weather, DayForecast, Forecast
 class WeatherAPI:
     """Interface for OpenWeatherMap API."""
     
-    def __init__(self, api_key: str, base_url: str = "https://api.openweathermap.org/data/2.5", units: str = "metric"):
+    def __init__(
+        self,
+        api_key: str,
+        base_url: str = "https://api.openweathermap.org/data/2.5",
+        units: str = "metric",
+    ):
         """Initialize Weather API client.
         
         Args:
@@ -22,7 +27,9 @@ class WeatherAPI:
         self.units = units
         self.timeout = 10
     
-    def _make_request(self, endpoint: str, params: Dict[str, Any]) -> Dict[str, Any]:
+    def _make_request(
+        self, endpoint: str, params: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Make HTTP request to API.
         
         Args:
@@ -36,8 +43,8 @@ class WeatherAPI:
             requests.RequestException: If request fails
         """
         url = f"{self.base_url}{endpoint}"
-        params['appid'] = self.api_key
-        params['units'] = self.units
+        params["appid"] = self.api_key
+        params["units"] = self.units
         
         response = requests.get(url, params=params, timeout=self.timeout)
         response.raise_for_status()
@@ -56,21 +63,21 @@ class WeatherAPI:
             data = self._make_request("/weather", {"q": city})
             
             return Weather(
-                city=data['name'],
-                country=data['sys']['country'],
-                temperature=data['main']['temp'],
-                feels_like=data['main']['feels_like'],
-                humidity=data['main']['humidity'],
-                pressure=data['main']['pressure'],
-                wind_speed=data['wind']['speed'],
-                wind_deg=data['wind'].get('deg', 0),
-                clouds=data['clouds']['all'],
-                description=data['weather'][0]['main'],
-                icon=data['weather'][0]['icon'],
-                visibility=data.get('visibility', 0),
-                sunrise=data['sys'].get('sunrise'),
-                sunset=data['sys'].get('sunset'),
-                timestamp=datetime.now()
+                city=data["name"],
+                country=data["sys"]["country"],
+                temperature=data["main"]["temp"],
+                feels_like=data["main"]["feels_like"],
+                humidity=data["main"]["humidity"],
+                pressure=data["main"]["pressure"],
+                wind_speed=data["wind"]["speed"],
+                wind_deg=data["wind"].get("deg", 0),
+                clouds=data["clouds"]["all"],
+                description=data["weather"][0]["main"],
+                icon=data["weather"][0]["icon"],
+                visibility=data.get("visibility", 0),
+                sunrise=data["sys"].get("sunrise"),
+                sunset=data["sys"].get("sunset"),
+                timestamp=datetime.now(),
             )
         except requests.RequestException as e:
             print(f"Error fetching weather: {e}")
@@ -89,25 +96,25 @@ class WeatherAPI:
             data = self._make_request("/forecast", {"q": city, "cnt": 40})
             
             # Group forecasts by day
-            daily_forecasts = {}
+            daily_forecasts: Dict[str, List[Forecast]] = {}
             
-            for item in data['list']:
-                dt = datetime.fromtimestamp(item['dt'])
+            for item in data["list"]:
+                dt = datetime.fromtimestamp(item["dt"])
                 date_key = dt.strftime("%Y-%m-%d")
                 
                 if date_key not in daily_forecasts:
                     daily_forecasts[date_key] = []
                 
                 forecast = Forecast(
-                    timestamp=item['dt'],
-                    temperature=item['main']['temp'],
-                    feels_like=item['main']['feels_like'],
-                    humidity=item['main']['humidity'],
-                    pressure=item['main']['pressure'],
-                    wind_speed=item['wind']['speed'],
-                    description=item['weather'][0]['main'],
-                    icon=item['weather'][0]['icon'],
-                    precipitation=item.get('rain', {}).get('3h', 0)
+                    timestamp=item["dt"],
+                    temperature=item["main"]["temp"],
+                    feels_like=item["main"]["feels_like"],
+                    humidity=item["main"]["humidity"],
+                    pressure=item["main"]["pressure"],
+                    wind_speed=item["wind"]["speed"],
+                    description=item["weather"][0]["main"],
+                    icon=item["weather"][0]["icon"],
+                    precipitation=item.get("rain", {}).get("3h", 0),
                 )
                 daily_forecasts[date_key].append(forecast)
             
@@ -115,24 +122,28 @@ class WeatherAPI:
             day_forecasts = []
             for date_key, forecasts in sorted(daily_forecasts.items()):
                 temps = [f.temperature for f in forecasts]
-                day_forecasts.append(DayForecast(
-                    date=date_key,
-                    temp_max=max(temps),
-                    temp_min=min(temps),
-                    description=forecasts[0].description,
-                    icon=forecasts[0].icon,
-                    humidity=sum(f.humidity for f in forecasts) // len(forecasts),
-                    wind_speed=sum(f.wind_speed for f in forecasts) / len(forecasts),
-                    precipitation=sum(f.precipitation for f in forecasts),
-                    forecasts=forecasts
-                ))
+                day_forecasts.append(
+                    DayForecast(
+                        date=date_key,
+                        temp_max=max(temps),
+                        temp_min=min(temps),
+                        description=forecasts[0].description,
+                        icon=forecasts[0].icon,
+                        humidity=sum(f.humidity for f in forecasts) // len(forecasts),
+                        wind_speed=sum(f.wind_speed for f in forecasts) / len(forecasts),
+                        precipitation=sum(f.precipitation for f in forecasts),
+                        forecasts=forecasts,
+                    )
+                )
             
             return day_forecasts
         except requests.RequestException as e:
             print(f"Error fetching forecast: {e}")
             return None
     
-    def get_weather_by_coordinates(self, lat: float, lon: float) -> Optional[Weather]:
+    def get_weather_by_coordinates(
+        self, lat: float, lon: float
+    ) -> Optional[Weather]:
         """Get current weather by coordinates.
         
         Args:
@@ -146,21 +157,21 @@ class WeatherAPI:
             data = self._make_request("/weather", {"lat": lat, "lon": lon})
             
             return Weather(
-                city=data['name'],
-                country=data['sys']['country'],
-                temperature=data['main']['temp'],
-                feels_like=data['main']['feels_like'],
-                humidity=data['main']['humidity'],
-                pressure=data['main']['pressure'],
-                wind_speed=data['wind']['speed'],
-                wind_deg=data['wind'].get('deg', 0),
-                clouds=data['clouds']['all'],
-                description=data['weather'][0]['main'],
-                icon=data['weather'][0]['icon'],
-                visibility=data.get('visibility', 0),
-                sunrise=data['sys'].get('sunrise'),
-                sunset=data['sys'].get('sunset'),
-                timestamp=datetime.now()
+                city=data["name"],
+                country=data["sys"]["country"],
+                temperature=data["main"]["temp"],
+                feels_like=data["main"]["feels_like"],
+                humidity=data["main"]["humidity"],
+                pressure=data["main"]["pressure"],
+                wind_speed=data["wind"]["speed"],
+                wind_deg=data["wind"].get("deg", 0),
+                clouds=data["clouds"]["all"],
+                description=data["weather"][0]["main"],
+                icon=data["weather"][0]["icon"],
+                visibility=data.get("visibility", 0),
+                sunrise=data["sys"].get("sunrise"),
+                sunset=data["sys"].get("sunset"),
+                timestamp=datetime.now(),
             )
         except requests.RequestException as e:
             print(f"Error fetching weather by coordinates: {e}")

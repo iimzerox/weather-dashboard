@@ -1,6 +1,6 @@
 """Data models for weather information."""
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 
@@ -24,7 +24,7 @@ class Weather:
     uv_index: Optional[float] = None
     sunrise: Optional[int] = None
     sunset: Optional[int] = None
-    timestamp: datetime = None
+    timestamp: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
@@ -64,12 +64,7 @@ class DayForecast:
     humidity: int
     wind_speed: float
     precipitation: float
-    forecasts: List[Forecast] = None
-    
-    def __post_init__(self) -> None:
-        """Initialize empty forecasts list."""
-        if self.forecasts is None:
-            self.forecasts = []
+    forecasts: List[Forecast] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""

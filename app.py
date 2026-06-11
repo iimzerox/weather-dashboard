@@ -1,7 +1,8 @@
-"""Weather Dashboard - Flask Application"""
+"""Weather Dashboard - Flask Application."""
 
 from flask import Flask
 from config import Config
+
 
 def create_app():
     """Application factory function."""
@@ -22,6 +23,7 @@ def create_app():
         return {"error": "Server error"}, 500
     
     return app
+
 
 if __name__ == "__main__":
     app = create_app()
